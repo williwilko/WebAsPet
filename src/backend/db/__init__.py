@@ -10,8 +10,8 @@ class Init:
     conn: Any
     cursor: Any
 
-    def __init__(self):
-        self.conn = sql.connect("database.db")
+    def __init__(self, db_path: str) -> None:
+        self.conn = sql.connect(db_path)
         self.cursor = self.conn.cursor()
 
     def close(self):
