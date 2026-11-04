@@ -18,6 +18,7 @@ class Init:
         self.conn.close()
 
     def initialise(self):
+        # TODO: Include foreign keys (FK) for UUIDs
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             uuid TEXT PRIMARY KEY,
@@ -32,7 +33,7 @@ class Init:
             uuid TEXT PRIMARY KEY,
             owner TEXT NOT NULL,
             name TEXT NOT NULL,
-            birth_date TEXT NOT NULL,
+            birth_date TEXT NOT NULL
         )
         """)
         self.cursor.execute("""
@@ -40,14 +41,13 @@ class Init:
             pet_uuid TEXT PRIMARY KEY,
             hunger INTEGER NOT NULL,
             sleep INTEGER NOT NULL,
-            joy INTEGER NOT NULL,
+            joy INTEGER NOT NULL
         )
         """)
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS app_config (
             key TEXT PRIMARY KEY,
-            value TEXT NOT NULL,
+            value TEXT NOT NULL
         )
         """)
-
         self.conn.commit()
