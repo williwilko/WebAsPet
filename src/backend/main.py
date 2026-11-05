@@ -1,6 +1,10 @@
 import argparse
+import uuid
 from pathlib import Path
-# IMPLEMENT LOGGING
+
+from models.pets import Pet
+
+# TODO: IMPLEMENT LOGGING
 
 if __name__ == '__main__':
     print('Program starting...')
@@ -9,11 +13,27 @@ if __name__ == '__main__':
     parser.add_argument('--db-path', help='Set path for SQLite database', type=str)
     args = parser.parse_args()
 
+    if args.db_path:
+        db_path = (Path(__file__).parent / args.db_path).resolve()
+    else:
+        print('please specify the database path')
+        exit()
+
+
     if args.init and args.db_path:
         print('Initialising the database...')
         import db.__init__ as db_init
 
-        db_path = (Path(__file__).parent / args.db_path).resolve()
         print(f'Initialising database at {db_path}')
         db = db_init.Init(db_path=db_path)
         db.initialise()
+        print('Initialisation complete!')
+        print('Please rerun the program now')
+        exit()
+    else:
+        print('Starting the program...')
+        import db.controller as db_controller
+
+        db = db_controller.Database(db_path)
+        pet = Pet(str(uuid.uuid4()), 'jeff', str(['me']), '123')
+        db.addPet(pet)

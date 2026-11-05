@@ -1,7 +1,7 @@
 import sqlite3 as sql
 from pathlib import Path
 
-from src.backend.models.pets import Pet
+from models.pets import Pet
 
 
 class Database:
