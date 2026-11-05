@@ -221,4 +221,5 @@ __marimo__/
 
 # Custom
 /src/daniel/
-/src/backend/db/
+/src/backend/db/data.db
+/src/backend/db/migrations
