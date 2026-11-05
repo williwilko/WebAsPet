@@ -13,11 +13,16 @@ class Init:
     def __init__(self, db_path: str) -> None:
         self.conn = sql.connect(db_path)
         self.cursor = self.conn.cursor()
+        self.db_path = db_path
 
     def close(self):
         self.conn.close()
 
     def initialise(self):
+        self.cursor.execute("DROP TABLE IF EXISTS pet_stats")
+        self.cursor.execute("DROP TABLE IF EXISTS pets")
+        self.cursor.execute("DROP TABLE IF EXISTS users")
+        self.cursor.execute("DROP TABLE IF EXISTS app_config")
         # TODO: Include foreign keys (FK) for UUIDs
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
