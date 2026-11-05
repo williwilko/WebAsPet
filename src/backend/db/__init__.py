@@ -1,6 +1,8 @@
 import sqlite3 as sql
 from typing import Any
 
+# TODO: Should be in init.py / __init__.py is used to make internal modules accessible to above layers
+
 
 #################################################
 ## Initialisation of new SQLite3 Database file ##
@@ -9,6 +11,7 @@ from typing import Any
 class Init:
     conn: Any
     cursor: Any
+    db_path: Any
 
     def __init__(self, db_path: str) -> None:
         self.conn = sql.connect(db_path)
