@@ -33,7 +33,10 @@ if __name__ == '__main__':
     else:
         print('Starting the program...')
         import db.controller as db_controller
+        import service.petService as pet_service
+        import service.userService as user_service
 
-        db = db_controller.Database(db_path)
-        pet = Pet(str(uuid.uuid4()), 'jeff', str(['me']), '123')
-        db.addPet(pet)
+        db = db_controller.Database(db_path=db_path)
+        petService = pet_service.PetService(db)
+        userService = user_service.UserService(db)
+        api = "" # TODO
