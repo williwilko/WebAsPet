@@ -1,6 +1,7 @@
 import sqlite3 as sql
 from pathlib import Path
 
+from models.dbReply import Reply
 from models.pets import Pet
 
 
@@ -14,21 +15,24 @@ class Database:
     def close(self):
         self.conn.close()
 
-    def addPet(self, pet: Pet) -> None:
+    def addPet(self, pet: Pet) -> Reply:
         self.cursor.execute("""
             INSERT INTO pets (uuid, owner, name, birth_date)
             VALUES (?, ?, ?, ?)
             """, (pet.uuid, pet.owner, pet.name, pet.birth_date)) # TODO: FILL ME
         self.conn.commit()
+        return Reply('ok', data=pet)
 
-    def getPetByUuid(self, uuid: str) -> Pet:
+    def getPetByUuid(self, uuid: str) -> Reply:
         self.cursor.execute("""
             SELECT * FROM pets WHERE uuid = ?
         """, (uuid,))
         res = self.cursor.fetchone()
         print(res)
-        return Pet() # TODO
+        pet = Pet()
+        return Reply('ok', data=pet)
 
-    def removePetByUuid(self, uuid: str) -> None:
+    def removePetByUuid(self, uuid: str) -> Reply:
         self.cursor.execute() # TODO: FILL ME
         self.conn.commit()
+        return Reply('ok')
