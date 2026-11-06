@@ -2,7 +2,8 @@ import sqlite3 as sql
 from pathlib import Path
 
 from models.dbReply import Reply
-from models.pets import Pet
+from models.pets import Pet, PetStats
+from models.users import User
 
 
 class Database:
@@ -19,14 +20,14 @@ class Database:
         self.cursor.execute("""
             INSERT INTO pets (uuid, owner, name, birth_date)
             VALUES (?, ?, ?, ?)
-            """, (pet.uuid, pet.owner, pet.name, pet.birth_date)) # TODO: FILL ME
+            """, (str(pet.uuid), str(pet.owner), pet.name, pet.birth_date)) # TODO: FILL ME
         self.conn.commit()
         return Reply('ok', data=pet)
 
     def getPetByUuid(self, uuid: str) -> Reply:
         self.cursor.execute("""
             SELECT * FROM pets WHERE uuid = ?
-        """, (uuid,))
+            """, (uuid,))
         res = self.cursor.fetchone()
         print(res)
         pet = Pet()
@@ -34,5 +35,18 @@ class Database:
 
     def removePetByUuid(self, uuid: str) -> Reply:
         self.cursor.execute() # TODO: FILL ME
+        self.conn.commit()
+        return Reply('ok')
+
+    def addPetStatsByUuid(self, uuid, stats: PetStats) -> Reply:
+        self.cursor.execute("""
+            INSERT INTO pet_stats 
+            """, ())
+
+    def addUser(self, user: User) -> Reply:
+        self.cursor.execute("""
+            INSERT INTO users (uuid, name, salt, password, session_hash)
+            VALUES (?, ?, ?, ?, ?)
+            """, (str(user.uuid), user.name, user.salt, user.password, user.session_hash))
         self.conn.commit()
         return Reply('ok')
