@@ -42,14 +42,21 @@ class Init:
             owner TEXT NOT NULL,
             name TEXT NOT NULL,
             birth_date TEXT NOT NULL
+
+            FOREIGN KEY (owner) REFERENCES users(uuid)
+            ON DELETE CASCADE
         )
         """)
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS pet_stats (
             pet_uuid TEXT PRIMARY KEY,
             hunger INTEGER NOT NULL,
+            health INTEGER NOT NULL,
             sleep INTEGER NOT NULL,
             joy INTEGER NOT NULL
+
+            FOREIGN KEY (pet_uuid) REFERENCES pets(uuid)
+            ON DELETE CASCADE
         )
         """)
         self.cursor.execute("""
