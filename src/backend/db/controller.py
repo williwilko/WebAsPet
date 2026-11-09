@@ -22,7 +22,7 @@ class Database:
             VALUES (?, ?, ?, ?)
             """, (str(pet.uuid), str(pet.owner), pet.name, pet.birth_date)) # TODO: FILL ME
         self.conn.commit()
-        return Reply('ok', data=pet)
+        return Reply(True, data=pet)
 
     def getPetByUuid(self, uuid: str) -> Reply:
         self.cursor.execute("""
@@ -31,12 +31,12 @@ class Database:
         res = self.cursor.fetchone()
         print(res)
         pet = Pet()
-        return Reply('ok', data=pet)
+        return Reply(True, data=pet)
 
     def removePetByUuid(self, uuid: str) -> Reply:
         self.cursor.execute() # TODO: FILL ME
         self.conn.commit()
-        return Reply('ok')
+        return Reply(True)
 
     def addPetStatsByUuid(self, uuid, stats: PetStats) -> Reply:
         self.cursor.execute("""
@@ -44,9 +44,12 @@ class Database:
             """, ())
 
     def addUser(self, user: User) -> Reply:
-        self.cursor.execute("""
-            INSERT INTO users (uuid, name, salt, password, session_hash)
-            VALUES (?, ?, ?, ?, ?)
-            """, (str(user.uuid), user.name, user.salt, user.password, user.session_hash))
-        self.conn.commit()
-        return Reply('ok')
+        try:
+            self.cursor.execute("""
+                INSERT INTO users (uuid, name, salt, password, session_hash)
+                VALUES (?, ?, ?, ?, ?)
+                """, (str(user.uuid), user.name, user.salt, user.password, user.session_hash))
+            self.conn.commit()
+            return Reply(True)
+        except:
+            return Reply(False)

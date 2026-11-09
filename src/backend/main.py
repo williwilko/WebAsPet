@@ -1,8 +1,8 @@
 import argparse
-import uuid
 from pathlib import Path
 
 from models.pets import Pet
+from models.users import User
 
 # TODO: IMPLEMENT LOGGING
 
@@ -40,3 +40,6 @@ if __name__ == '__main__':
         petService = pet_service.PetService(db)
         userService = user_service.UserService(db)
         api = "" # TODO
+
+        user = User(name='Wilko', password='abc')
+        userService.addUser(user)
