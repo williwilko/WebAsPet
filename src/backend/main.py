@@ -1,13 +1,17 @@
 import argparse
 from pathlib import Path
+import logging
 
 from models.pets import Pet
 from models.users import User
-
-# TODO: IMPLEMENT LOGGING
+from logging_config import setup_logging
 
 if __name__ == '__main__':
-    print('Program starting...')
+    setup_logging()
+    logger = logging.getLogger(__name__)
+    logger.info('Set up logger...')
+    logger.info('Program starting...')
+
     parser = argparse.ArgumentParser(description='abc')
     parser.add_argument('-i', '--init', help='(Re-)Initialise the database', action='store_true')
     parser.add_argument('--db-path', help='Set path for SQLite database', type=str)
