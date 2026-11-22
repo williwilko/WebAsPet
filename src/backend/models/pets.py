@@ -4,7 +4,12 @@ class Pet:
     owners: list[str]
     birth_date: str
 
-    def __init__(self, uuid: str = None, name: str = None, owner: list[str] = None, birth_date: str = None):
+    def __init__(
+            self,
+            uuid: str = None,
+            name: str = None,
+            owner: list[str] = None,
+            birth_date: str = None):
         self.uuid = uuid
         self.name = name
         self.owner = owner

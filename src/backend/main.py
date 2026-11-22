@@ -45,3 +45,5 @@ if __name__ == '__main__':
 
         user = User(name='Wilko', password='abc')
         userService.addUser(user)
+
+    logger.info('Exiting program.')
