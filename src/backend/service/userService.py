@@ -3,6 +3,9 @@ from uuid import uuid4
 from db.controller import Database
 from models.users import User
 from utils.passwordUtil import *
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class UserService:

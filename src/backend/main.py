@@ -6,10 +6,10 @@ from models.pets import Pet
 from models.users import User
 from logging_config import setup_logging
 
+setup_logging()
+logger = logging.getLogger(__name__)
+
 if __name__ == '__main__':
-    setup_logging()
-    logger = logging.getLogger(__name__)
-    logger.info('Set up logger...')
     logger.info('Program starting...')
 
     parser = argparse.ArgumentParser(description='abc')
@@ -20,22 +20,20 @@ if __name__ == '__main__':
     if args.db_path:
         db_path = (Path(__file__).parent / args.db_path).resolve()
     else:
-        print('please specify the database path')
+        logger.critical('Exiting because no DB path was specified as start up parameter.')
         exit()
 
 
     if args.init and args.db_path:
-        print('Initialising the database...')
+        logger.info(f'Initialising new database at {args.db_path}...')
         import db.__init__ as db_init
 
-        print(f'Initialising database at {db_path}')
         db = db_init.Init(db_path=db_path)
         db.initialise()
-        print('Initialisation complete!')
-        print('Please rerun the program now')
+        logger.info('DB set up successfully, please rerun the program now.')
         exit()
     else:
-        print('Starting the program...')
+        logger.info('Starting the program...')
         import db.controller as db_controller
         import service.petService as pet_service
         import service.userService as user_service

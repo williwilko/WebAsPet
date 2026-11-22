@@ -2,6 +2,9 @@ from db.controller import Database
 from models.pets import Pet
 from uuid import uuid4
 import utils.timeUtil as timeUtil
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class PetService:

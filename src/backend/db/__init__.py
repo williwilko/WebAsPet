@@ -1,6 +1,9 @@
 import sqlite3 as sql
 from typing import Any
 import logging
+import logging
+
+logger = logging.getLogger(__name__)
 
 # TODO: Should be in init.py / __init__.py is used to make internal modules accessible to above layers
 
@@ -18,13 +21,12 @@ class Init:
         self.conn = sql.connect(db_path)
         self.cursor = self.conn.cursor()
         self.db_path = db_path
-        self.logger = logging.getLogger(__name__)
 
     def close(self):
         self.conn.close()
 
     def initialise(self):
-        self.logger.info('Initialising new Database...')
+        logger.info('Initialising new Database...')
         self.cursor.execute("DROP TABLE IF EXISTS pet_stats")
         self.cursor.execute("DROP TABLE IF EXISTS pets")
         self.cursor.execute("DROP TABLE IF EXISTS users")

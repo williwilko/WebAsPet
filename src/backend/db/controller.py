@@ -4,6 +4,9 @@ from pathlib import Path
 from models.dbReply import Reply
 from models.pets import Pet, PetStats
 from models.users import User
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Database:
@@ -12,9 +15,11 @@ class Database:
     def __init__(self, db_path):
         self.conn = sql.connect(db_path)
         self.cursor = self.conn.cursor()
+        logger.info(f'Created DB connection to {str(db_path)}.')
 
     def close(self):
         self.conn.close()
+        logger.info('Closed a DB connection.')
 
     def addPet(self, pet: Pet) -> Reply:
         self.cursor.execute("""
